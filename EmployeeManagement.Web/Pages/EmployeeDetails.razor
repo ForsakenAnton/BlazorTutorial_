@@ -1,0 +1,38 @@
+﻿@page "/employeedetails/{id:int}"
+
+@if (EmployeeDTO == null @*|| Employee.Department == null*@)
+{
+    <div class="spinner"></div>
+}
+else
+{
+    <div class="row justify-content-center m-3">
+        <div class="col-sm-8">
+            <div class="card">
+                <div class="card-header">
+                    <h1>@EmployeeDTO.FirstName @EmployeeDTO.LastName</h1>
+                </div>
+
+                <div class="card-body text-center">
+                    <img class="card-img-top" src="@EmployeeDTO.PhotoPath" />
+
+                    <h4>Employee ID : @EmployeeDTO.EmployeeId</h4>
+                    <h4>Email : @EmployeeDTO.Email</h4>
+                    <h4>Department : @EmployeeDTO?.Department?.DepartmentName</h4>
+                </div>
+                <button class="btn btn-primary" @onclick="@Button_Click">@ButtonText</button>
+                <div class="@CssClass card-footer text-center">
+                    <a href="/" class="btn btn-primary">Back</a>
+                    <a href="@($"editemployee/{EmployeeDTO.EmployeeId}")" class="btn btn-primary">Edit</a>
+                    <a href="#" class="btn btn-danger">Delete</a>
+                    <div>
+                        <textarea @bind="Description" @bind:event="oninput" />
+                    </div>
+                    <div>
+                        Count : @Description.Length
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

@@ -1,0 +1,87 @@
+﻿@page "/editemployee/{id}"
+@page "/editemployee"
+@using EmployeeManagement.Models
+
+@*@attribute [Authorize]*@
+
+<EditForm Model="@EditEmployeeModel" OnValidSubmit="HandleValidSubmit">
+    <DataAnnotationsValidator />
+    @*<ObjectGraphDataAnnotationsValidator />*@
+    <h3>@PageHeader</h3>
+    <hr />
+    <ValidationSummary />
+
+    <div class="input-group mb-3">
+        <span class="input-group-text">First Name</span>
+        <InputText @bind-Value="EditEmployeeModel.FirstName" class="form-control" placeholder="First Name" />
+        <ValidationMessage For="@(() => EditEmployeeModel.FirstName)" />
+    </div>
+
+    <div class="input-group mb-3">
+        <span class="input-group-text">Last Name</span>
+        <InputText @bind-Value="EditEmployeeModel.LastName" class="form-control" placeholder="Last Name" />
+        <ValidationMessage For="@(() => EditEmployeeModel.LastName)" />
+    </div>
+
+    <div class="input-group mb-3">
+        <span class="input-group-text">Email</span>
+        <InputText @bind-Value="EditEmployeeModel.Email" class="form-control" placeholder="Email" />
+        <ValidationMessage For="@(() => EditEmployeeModel.Email)" />
+    </div>
+    <div class="input-group mb-3">
+        <span class="input-group-text">Confirm Email</span>
+        <InputText @bind-Value="EditEmployeeModel.ConfirmEmail" class="form-control" placeholder="Confirm Email" />
+        <ValidationMessage For="@(() => EditEmployeeModel.ConfirmEmail)" />
+    </div>
+
+    <div class="input-group mb-3">
+        <span class="input-group-text">Department</span>
+        @*<InputSelect @bind-Value="DepartmentId" id="department">*@
+        <CustomInputSelect @bind-Value="EditEmployeeModel.DepartmentId" id="department">
+            <option selected disabled="disabled">Choose department</option>
+            @foreach (var department in Departments)
+            {
+                <option value="@department.DepartmentId">@department.DepartmentName</option>
+            }
+        </CustomInputSelect>
+    </div>
+
+    <div class="input-group mb-3">
+        <span class="input-group-text">Gender</span>
+        <InputSelect @bind-Value="EditEmployeeModel.Gender">
+            @foreach (var gender in Enum.GetValues(typeof(Gender)))
+            {
+                <option value="@gender">@gender</option>
+            }
+        </InputSelect>
+    </div>
+
+    <div class="input-group mb-3">
+        <span class="input-group-text">Date Of Birth</span>
+        <InputDate @bind-Value="EditEmployeeModel.DateOfBrith" />
+    </div>
+
+    @*    <div class="form-group row">
+        Updating Department Name from this page does not make sense
+        This is only here to demonstrate complex model validation
+        <label for="deptName" class="col-sm-2 col-form-label">
+        Department Name
+        </label>
+        <div id="deptName" class="col-sm-10">
+        <InputText @bind-Value="EditEmployeeModel.Department.DepartmentName"
+        class="form-control" />
+        <ValidationMessage For="@(() => EditEmployeeModel.Department.DepartmentName)" />
+        </div>
+        </div>*@
+
+    <div class="clearfix">
+        <button class="btn btn-primary float-start" type="submit">Submit</button>
+
+        @if (EditEmployeeModel .EmployeeId > 0)
+        {
+            <button class="btn btn-danger float-end" type="button" @onclick="Delete_Click">
+                Delete
+            </button>
+        }
+    </div>
+</EditForm>

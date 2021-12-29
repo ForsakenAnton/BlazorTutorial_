@@ -1,0 +1,28 @@
+﻿@page "/"
+@inherits EmployeeListBase
+
+
+<h3>Employee List</h3>
+
+<h3>Selected Emoloyees Count - @SelectedEmoloyeesCount</h3>
+
+<input type="checkbox" id="showFooter" @bind="ShowFooter" />
+<label for="showFooter">Show Footer</label>
+
+@if (EmployeesDTO == null)
+{
+    <div class="spinner"></div>
+}
+
+else
+{
+    <div class="row">
+        @foreach (var employee in EmployeesDTO)
+        {
+            <DisplayEmployee EmployeeDTO="employee"
+                             ShowFooter="ShowFooter" 
+                             OnEmployeeSelection="EmployeeSelectionChanged"
+                             OnEmployeeDeleted="EmployeeDeleted"/>
+        }
+    </div>
+}

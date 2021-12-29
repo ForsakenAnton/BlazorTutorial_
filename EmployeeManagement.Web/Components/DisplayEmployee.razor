@@ -1,0 +1,26 @@
+﻿
+<Confirm @ref="DeleteConfirmation" ConfirmationChanged="ConfirmDelete_Click"
+         ConfirmationMessage=@($"Are you sure you want to delete \"{EmployeeDTO.FirstName}\"")>
+</Confirm>
+
+<div class="col-xl-3 col-lg-4 col-md-6 col-12">
+    <div class="card m-3">
+        <div class="card-header">
+            <h3>
+                <input type="checkbox" checked="@IsSelected" @onchange="CheckBoxChanged" />
+                @EmployeeDTO.FirstName @EmployeeDTO.LastName
+            </h3>
+        </div>
+    </div>
+
+    <img class="card-img-top img-thumbnail" src="@EmployeeDTO.PhotoPath">
+
+    @if (ShowFooter)
+    {
+        <div class="card-footer text-center">
+            <a href="@($"employeedetails/{EmployeeDTO.EmployeeId}")" class="btn btn-primary m-1">View</a>
+            <a href="@($"editemployee/{EmployeeDTO.EmployeeId}")" class="btn btn-primary">Edit</a>
+            <button @onclick="Delete_Click" class="btn btn-danger m-1">Delete</button>
+        </div>
+    }
+</div>
